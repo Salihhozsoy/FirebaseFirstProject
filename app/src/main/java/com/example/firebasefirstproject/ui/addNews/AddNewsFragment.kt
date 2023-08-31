@@ -1,22 +1,26 @@
-package com.example.firebasefirstproject
+package com.example.firebasefirstproject.ui.addNews
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
-import com.example.firebasefirstproject.databinding.ActivityMainBinding
+import com.example.firebasefirstproject.Constants
+import com.example.firebasefirstproject.News
+import com.example.firebasefirstproject.R
+import com.example.firebasefirstproject.databinding.FragmentAddNewsBinding
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class MainActivity : AppCompatActivity() {
+class AddNewsFragment : Fragment(R.layout.fragment_add_news) {
 
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: FragmentAddNewsBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentAddNewsBinding.bind(view)
         val db = Firebase.firestore
 
         binding.btnSave.setOnClickListener {
@@ -46,10 +50,11 @@ class MainActivity : AppCompatActivity() {
                     val news = it.document.toObject(News::class.java)
                     when (it.type) {
                         DocumentChange.Type.ADDED -> {
-                            val tvNews = TextView(this)
-                            tvNews.text = "${news.title} ${news.content}"
-                            binding.llNews.addView(tvNews)
+                            //  val tvNews = TextView(this)
+                            //   tvNews.text = "${news.title} ${news.content}"
+                            //   binding.llNews.addView(tvNews)
                         }
+
                         DocumentChange.Type.REMOVED -> {}
                         DocumentChange.Type.MODIFIED -> {}
                     }
@@ -57,4 +62,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 }
+
