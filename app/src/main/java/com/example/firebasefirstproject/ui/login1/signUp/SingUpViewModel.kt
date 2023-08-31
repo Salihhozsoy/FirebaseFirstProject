@@ -2,7 +2,9 @@ package com.example.firebasefirstproject.ui.login1.signUp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.firebasefirstproject.data.model.User
 import com.example.firebasefirstproject.data.repository.AuthRepository
+import com.example.firebasefirstproject.data.repository.UserRepository
 import com.example.firebasefirstproject.data.state.RegisterState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SingUpViewModel @Inject constructor(private val authRepository: AuthRepository) : ViewModel() {
+class SingUpViewModel @Inject constructor(private val authRepository: AuthRepository,private val userRepository: UserRepository) : ViewModel() {
 
     private val _registerState: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState.Idle)
     val registerState: StateFlow<RegisterState> = _registerState
@@ -27,8 +29,12 @@ class SingUpViewModel @Inject constructor(private val authRepository: AuthReposi
                 if (email.isNotEmpty() && password.isNotEmpty() && passwordAgain.isNotEmpty()) {
                     if (password == passwordAgain) {
                         _registerState.value =RegisterState.Loading
-                        authRepository.register(email, password)
+                        authRepository.register(email, password).user?.let {
+                            val user = User(it.uid,it.email)
+                            userRepository.insert(user)
+                        }
                         _registerState.value=RegisterState.Success
+
                     } else {
                         _message.emit("password are not matched")
                     }

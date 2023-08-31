@@ -2,6 +2,7 @@ package com.example.firebasefirstproject.data.repository
 
 import com.example.firebasefirstproject.data.state.AuthState
 import com.example.firebasefirstproject.data.state.RegisterState
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -13,7 +14,7 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseA
         return if (authResult.user == null) AuthState.UserNotFound else AuthState.Success
     }
 
-    override suspend fun register(email: String, password: String) {
-      firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+    override suspend fun register(email: String, password: String) :AuthResult {
+     return firebaseAuth.createUserWithEmailAndPassword(email, password).await()
     }
 }
