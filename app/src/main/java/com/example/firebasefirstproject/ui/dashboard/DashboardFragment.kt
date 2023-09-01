@@ -45,8 +45,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                         UserListState.Empty -> {}
                         UserListState.Loading -> {}
                         is UserListState.Result -> {
-                            binding.rvUsers.adapter = UserAdapter(requireContext(), it.users, this@DashboardFragment::onUserAdapterOnClick
-                            )
+                            binding.rvUsers.adapter = UserAdapter(requireContext(), it.users, this@DashboardFragment::onUserAdapterOnClick)
                         }
                         is UserListState.Error -> {}
                     }

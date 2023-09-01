@@ -18,7 +18,7 @@ import com.google.firebase.ktx.Firebase
 
 class AddNewsFragment : Fragment(R.layout.fragment_add_news) {
 
-    lateinit var binding: FragmentAddNewsBinding
+    private lateinit var binding: FragmentAddNewsBinding
     private val viewModel: AddNewsViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
