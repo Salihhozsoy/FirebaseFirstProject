@@ -16,8 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val authRepository: AuthRepository) : ViewModel() {
 
-    private val _loginState: MutableStateFlow<AuthState> = MutableStateFlow(AuthState.Idle)
-    val loginState: StateFlow<AuthState> = _loginState
+    private val _loginState: MutableSharedFlow<AuthState> = MutableSharedFlow()
+    val loginState: SharedFlow<AuthState> = _loginState
 
     private val _message: MutableSharedFlow<String> = MutableSharedFlow()
     val message: SharedFlow<String> = _message
@@ -26,18 +26,18 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
         viewModelScope.launch {
             kotlin.runCatching {
                 if(email.isNotEmpty() && password.isNotEmpty()) {
-                    _loginState.value = AuthState.Loading
-                    _loginState.value = authRepository.login(email, password)
+                    _loginState.emit( AuthState.Loading)
+                    _loginState.emit(authRepository.login(email, password))
                 }else{
                     _message.emit("do not leave fields empty")
                 }
             }.onFailure {
                 when (it) {
                     is FirebaseAuthInvalidUserException -> {
-                        _loginState.value = AuthState.UserNotFound
+                        _loginState.emit(AuthState.UserNotFound)
                     }
                     else -> {
-                        _loginState.value = AuthState.Error(it)
+                        _loginState.emit(AuthState.Error(it))
                     }
                 }
             }

@@ -2,6 +2,8 @@ package com.example.firebasefirstproject.data.di
 
 import com.example.firebasefirstproject.data.repository.AuthRepository
 import com.example.firebasefirstproject.data.repository.AuthRepositoryImpl
+import com.example.firebasefirstproject.data.repository.NewsRepository
+import com.example.firebasefirstproject.data.repository.NewsRepositoryImpl
 import com.example.firebasefirstproject.data.repository.UserRepository
 import com.example.firebasefirstproject.data.repository.UserRepositoryImpl
 import dagger.Module
@@ -23,4 +25,9 @@ object RepositoryModule {
     @Singleton
     fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository =
         userRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideNewsRepository(newsRepositoryImpl: NewsRepositoryImpl): NewsRepository =
+        newsRepositoryImpl
 }
