@@ -6,6 +6,7 @@ import com.example.firebasefirstproject.data.model.User
 import com.example.firebasefirstproject.data.state.AllNewsState
 import com.example.firebasefirstproject.data.state.UserListState
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -16,17 +17,16 @@ class NewsRepositoryImpl @Inject constructor(private val fireStore: FirebaseFire
             it.update(mapOf("id" to it.id))
         }
     }
+
     override suspend fun getAllNews(userId: String?): AllNewsState {
-        return if (userId == null) {
-            val querySnapshot = fireStore.collection(Constants.NEWS).get().await()
 
-            if (querySnapshot.isEmpty) AllNewsState.Empty
-            else AllNewsState.Result(querySnapshot.toObjects(News::class.java))
-        } else {
-            val querySnapshot = fireStore.collection(Constants.NEWS).whereEqualTo(Constants.EDITOR_ID, userId).get().await()
+        val querySnapshot: QuerySnapshot = if (userId == null)
+            fireStore.collection(Constants.NEWS).get().await()
+        else
+            fireStore.collection(Constants.NEWS).whereEqualTo(Constants.EDITOR_ID, userId).get()
+                .await()
 
-            if (querySnapshot.isEmpty) AllNewsState.Empty
-            else AllNewsState.Result(querySnapshot.toObjects(News::class.java))
-        }
+        return if (querySnapshot.isEmpty) AllNewsState.Empty
+        else AllNewsState.Result(querySnapshot.toObjects(News::class.java))
     }
 }
