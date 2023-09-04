@@ -29,4 +29,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun sendPasswordResetEmail(email: String) {
         firebaseAuth.sendPasswordResetEmail(email).await()
     }
+    override suspend fun getUser(): User? {
+        return firebaseFireStore.collection(Constants.USERS).document(firebaseAuth.currentUser?.uid.toString()).get().await().toObject(User::class.java)
+    }
 }

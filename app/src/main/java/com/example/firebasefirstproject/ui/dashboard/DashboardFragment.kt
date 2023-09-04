@@ -65,6 +65,9 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         binding.btnAllNews.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_allNewsFragment)
         }
+        binding.btnProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboardFragment_to_userProfileFragment)
+        }
     }
     private fun onUserAdapterOnClick(user: User) {
         findNavController().navigate(R.id.action_dashboardFragment_to_allNewsFragment, bundleOf(Constants.EDITOR_ID to user.id))
