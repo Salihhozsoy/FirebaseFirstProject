@@ -8,5 +8,5 @@ interface UserRepository {
     suspend fun insert(user: User)
     suspend fun getSignedUser(): User?
     suspend fun getAllUsers() :UserListState
-
+    suspend fun sendPasswordResetEmail(email:String)
 }

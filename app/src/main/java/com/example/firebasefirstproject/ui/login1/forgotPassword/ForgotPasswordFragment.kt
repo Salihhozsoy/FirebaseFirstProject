@@ -2,14 +2,18 @@ package com.example.firebasefirstproject.ui.login1.forgotPassword
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.firebasefirstproject.R
+import com.example.firebasefirstproject.data.state.ForgotPasswordState
 import com.example.firebasefirstproject.databinding.FragmentForgotPasswordBinding
-
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
 
@@ -20,6 +24,25 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
         binding = FragmentForgotPasswordBinding.bind(view)
 
         initListeners()
+        observeForgotPasswordState()
+    }
+
+    private fun observeForgotPasswordState(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED){
+                viewModel.forgotPasswordState.collect{
+                    when(it){
+                        ForgotPasswordState.Idle->{}
+                        ForgotPasswordState.Empty->{}
+                        ForgotPasswordState.Loading->{}
+                        ForgotPasswordState.Result->{
+                            Toast.makeText(requireContext(),"password reset success",Toast.LENGTH_LONG).show()
+                        }
+                        is ForgotPasswordState.Error->{}
+                    }
+                }
+            }
+        }
     }
 
     private fun initListeners() {

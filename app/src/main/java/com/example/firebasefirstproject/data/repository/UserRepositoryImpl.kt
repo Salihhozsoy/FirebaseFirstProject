@@ -25,4 +25,8 @@ class UserRepositoryImpl @Inject constructor(
         return if (querySnapshot.isEmpty) UserListState.Empty
         else UserListState.Result(querySnapshot.toObjects(User::class.java))
     }
+
+    override suspend fun sendPasswordResetEmail(email: String) {
+        firebaseAuth.sendPasswordResetEmail(email).await()
+    }
 }
