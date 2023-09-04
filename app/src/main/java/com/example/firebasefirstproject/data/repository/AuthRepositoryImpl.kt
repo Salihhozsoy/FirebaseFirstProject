@@ -7,14 +7,20 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseAuth) : AuthRepository {
+class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseAuth) :
+    AuthRepository {
 
     override suspend fun login(email: String, password: String): AuthState {
         val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
         return if (authResult.user == null) AuthState.UserNotFound else AuthState.Success
     }
 
-    override suspend fun register(email: String, password: String) :AuthResult {
-     return firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+    override suspend fun loginAnonymous(): AuthState {
+        firebaseAuth.signInAnonymously().await()
+        return AuthState.Success
+    }
+
+    override suspend fun register(email: String, password: String): AuthResult {
+        return firebaseAuth.createUserWithEmailAndPassword(email, password).await()
     }
 }

@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_addNewsFragment"
             app:destination="@id/addNewsFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_allNewsFragment"
+            app:destination="@id/allNewsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewsFragment"
@@ -54,5 +57,14 @@
         <action
             android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/allNewsFragment"
+        android:name="com.example.firebasefirstproject.ui.allnewsfragment.AllNewsFragment"
+        android:label="fragment_all_news"
+        tools:layout="@layout/fragment_all_news" >
+        <action
+            android:id="@+id/action_allNewsFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
     </fragment>
 </navigation>

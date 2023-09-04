@@ -13,7 +13,6 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(private val userRepository: UserRepository):ViewModel() {
 
-
     private val _userListState:MutableStateFlow<UserListState> = MutableStateFlow(UserListState.Idle)
     val userListState:StateFlow<UserListState> =_userListState
 

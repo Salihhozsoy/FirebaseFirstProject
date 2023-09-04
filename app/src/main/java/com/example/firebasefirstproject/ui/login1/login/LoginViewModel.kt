@@ -43,4 +43,15 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
             }
         }
     }
+
+    fun loginAnonymous(){
+        viewModelScope.launch {
+            kotlin.runCatching {
+                _loginState.emit(AuthState.Loading)
+                _loginState.emit(authRepository.loginAnonymous())
+            }.onFailure {
+                _loginState.emit(AuthState.Error(it))
+            }
+        }
+    }
 }

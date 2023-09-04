@@ -75,5 +75,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding.tvForgotPassword.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
         }
+        binding.btnLoginAsAnonymous.setOnClickListener {
+            viewModel.loginAnonymous()
+        }
     }
 }

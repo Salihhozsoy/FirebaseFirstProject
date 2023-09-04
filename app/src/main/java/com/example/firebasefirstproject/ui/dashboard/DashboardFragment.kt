@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.firebasefirstproject.Constants
 import com.example.firebasefirstproject.R
 import com.example.firebasefirstproject.data.model.User
 import com.example.firebasefirstproject.data.model.getFullNameOrEmail
@@ -61,6 +62,11 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         binding.btnGecis.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_addNewsFragment)
         }
+        binding.btnAllNews.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboardFragment_to_allNewsFragment)
+        }
     }
-    private fun onUserAdapterOnClick(user: User) {}
+    private fun onUserAdapterOnClick(user: User) {
+        findNavController().navigate(R.id.action_dashboardFragment_to_allNewsFragment, bundleOf(Constants.EDITOR_ID to user.id))
+    }
 }
