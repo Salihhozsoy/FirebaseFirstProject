@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivUserImage"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_margin="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,15 +25,6 @@
         app:layout_constraintLeft_toRightOf="@id/ivUserImage"
         app:layout_constraintTop_toTopOf="@id/ivUserImage" />
 
-    <TextView
-        android:id="@+id/tvUserRegisterTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:text="registerTime"
-        app:layout_constraintBottom_toBottomOf="@id/tvUserFullName"
-        app:layout_constraintLeft_toRightOf="@id/tvUserFullName"
-        app:layout_constraintTop_toTopOf="@id/tvUserFullName" />
 
     <View
         android:layout_width="match_parent"

@@ -13,4 +13,6 @@ interface UserRepository {
     suspend fun getUser() :User?
     suspend fun uploadProfileImage(uri: Uri)
 
+    suspend fun updateUser(map:Map<String,String>)
+
 }

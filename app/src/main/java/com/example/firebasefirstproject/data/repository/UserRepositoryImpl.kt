@@ -71,7 +71,12 @@ class UserRepositoryImpl @Inject constructor(
             CoroutineScope(Dispatchers.IO).launch { profilePhotoUpdateState.emit(ProfilePhotoUpdateState.Error(it))}
         }
     }
-   private suspend fun updateUserProfileImage(downloadPath:String){
+
+    override suspend fun updateUser(map: Map<String, String>) {
+        firebaseFireStore.collection(Constants.USERS).document(firebaseAuth.currentUser?.uid.toString()).update(map).await()
+    }
+
+    private suspend fun updateUserProfileImage(downloadPath:String){
        firebaseFireStore.collection(Constants.USERS).document(firebaseAuth.currentUser?.uid.toString()).update(mapOf(PROFILE_IMAGE_URL to downloadPath)).await()
    }
 

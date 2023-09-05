@@ -3,6 +3,8 @@ package com.example.firebasefirstproject.ui.profile
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.firebasefirstproject.Constants.NAME
+import com.example.firebasefirstproject.Constants.SURNAME
 import com.example.firebasefirstproject.data.repository.UserRepository
 import com.example.firebasefirstproject.data.state.ProfilePhotoUpdateState
 import com.example.firebasefirstproject.data.state.UserProfileState
@@ -19,7 +21,7 @@ class UserProfileViewModel @Inject constructor(
     private val _profilePhotoUpdateState: MutableSharedFlow<ProfilePhotoUpdateState>
 ) : ViewModel() {
 
-    val profilePhotoUpdateState=_profilePhotoUpdateState.asSharedFlow()
+    val profilePhotoUpdateState = _profilePhotoUpdateState.asSharedFlow()
 
     private val _userProfileState: MutableSharedFlow<UserProfileState> = MutableSharedFlow()
     val userProfileState: SharedFlow<UserProfileState> = _userProfileState
@@ -38,7 +40,13 @@ class UserProfileViewModel @Inject constructor(
     }
 
     fun updateProfile(name: String, surname: String) {
-
+        viewModelScope.launch {
+            val map = mapOf(
+                NAME to name,
+                SURNAME to surname
+            )
+            userRepository.updateUser(map)
+        }
     }
 
     fun uploadProfileImage(uri: Uri) {

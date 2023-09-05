@@ -53,7 +53,8 @@ class UserProfileFragment : Fragment(R.layout.fragment_user_profile) {
                         UserProfileState.Idle -> {}
                         UserProfileState.Loading -> {}
                         is UserProfileState.Result -> {
-                            binding.tvUserName.text = it.user.getFullNameOrEmail()
+                            binding.etUserName.setText(it.user.getFullNameOrEmail())
+                            binding.etUserSurname.setText(it.user.surname)
                             binding.ivUserProfileImage.load(it.user.profileImageUrl)
                         }
                         is UserProfileState.Error -> {}
@@ -75,10 +76,10 @@ class UserProfileFragment : Fragment(R.layout.fragment_user_profile) {
                             binding.pbImageUpload.progress = it.pr
                         }
                         ProfilePhotoUpdateState.Success -> {
-                            Snackbar.make(binding.tvUserName, "image uploaded", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(binding.etUserName, "image uploaded", Snackbar.LENGTH_LONG).show()
                         }
                         is ProfilePhotoUpdateState.Error -> {
-                            Snackbar.make(binding.tvUserName, "something went wrong", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(binding.etUserName, "something went wrong", Snackbar.LENGTH_LONG).show()
                         }
                     }
                 }
@@ -91,7 +92,7 @@ class UserProfileFragment : Fragment(R.layout.fragment_user_profile) {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
         binding.btnUpdate.setOnClickListener {
-            viewModel.updateProfile(binding.tvUserName.text.toString().trim(), binding.tvUserSurname.text.toString().trim())
+            viewModel.updateProfile(binding.etUserName.text.toString().trim(), binding.etUserSurname.text.toString().trim())
         }
     }
 }

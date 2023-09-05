@@ -9,7 +9,6 @@ import com.example.firebasefirstproject.data.model.User
 import com.example.firebasefirstproject.data.model.getFullNameOrEmail
 import com.example.firebasefirstproject.databinding.UserListItemBinding
 
-
 class UserAdapter(
     private val context: Context,
     private val users: List<User>,
@@ -18,7 +17,6 @@ class UserAdapter(
 
     class CustomViewHolder(binding: UserListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val tvUserFullName = binding.tvUserFullName
-        val tvUserRegisterTime = binding.tvUserRegisterTime
         val ivUserImage =binding.ivUserImage
     }
 
@@ -31,9 +29,7 @@ class UserAdapter(
     override fun onBindViewHolder(holder:CustomViewHolder, position: Int) {
         val user = users[position]
         holder.tvUserFullName.text = user.getFullNameOrEmail()
-        holder.tvUserRegisterTime.text=user.userRegisterTime.toString()
         holder.ivUserImage.load(user.profileImageUrl)
-
 
         holder.itemView.setOnClickListener {
             onClick(user)
