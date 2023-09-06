@@ -30,7 +30,7 @@ class AddNewsFragment : Fragment(R.layout.fragment_add_news) {
       uris.forEach{
           val imageView = ImageView(requireContext())
           imageView.setImageURI(it)
-          imageView.layoutParams =LinearLayout.LayoutParams(200,200)
+       //  imageView.layoutParams =LinearLayout.LayoutParams(200,200)
        //   binding.llImages.addView(imageView)
           viewModel.setNewsPhotos(uris)
       }
